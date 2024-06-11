@@ -276,3 +276,88 @@ const Button = () => {
 ```
 
 <img src="./img/variants/Tailwind-Variants_5.gif" />
+
+---
+
+### Slots
+
+複数の UI からなるコンポーネントのスタイルを 1 まとめにできる機能
+
+<img src="./img/variants/Tailwind-Variants-Slots_1.png">
+
+<br>
+
+
+
+<br>
+<br>
+
+以下は公式での Slots の利用例
+
+<img src="./img/variants/Tailwind-Variants-Slots_2.png" />
+
+<img src="./img/variants/Tailwind-Variants-Slots_3.png" />
+
+<br>
+
+**Slots を使うことのメリット**
+- スタイル定義が1箇所に集まる
+- Tailwind の各 UI に多くのクラス名(スタイル)が書かれるゴチャゴチャ感が軽減される
+
+<br>
+
+Slotsの使い方のポイント
+
+- tv 関数に {slots: {}} を引数として渡す
+
+- slots オブジェクトのプロパティは 各UIのキー名: "style"
+
+```js
+// 例
+const card = tv( {slots: { icon: 'bg-blue ~~~~'}} );
+```
+
+<br>
+
+- tv 関数を呼び出すとslotsオブジェクトに設定した各UIキー名が名前となった関数がオブジェクトで返ってくる
+```js
+const card = tv({
+    slots: {
+        wrapper: '~~'
+        icon: '~~',
+        name: '~~',
+        title: '~~'
+    }
+});
+
+const { wrapper, icon, name, title } = card();
+```
+
+<br>
+
+- tv 関数から帰ってきた関数を各タグの className で実行する
+
+```js
+const { wrapper, icon, name, title } = card();
+
+const Card = () => {
+    return (
+        <div className={ wrapper() }>
+                <img className={ icon() } src='~~' />
+                <p className={ name() }>~~</p>
+                <p className={ title() }>~~</p>
+        </div>
+    );
+};
+```
+
+<br>
+<br>
+
+Slots と variants の組み合わせもできるが、長くなる & 公式のサンプルを見た方がわかりやすいので省略
+
+<br>
+
+参考1: [公式の Slots ページ](https://www.tailwind-variants.org/docs/slots)
+
+参考2: [Tailwind Variantsに触れてみる](https://zenn.dev/yend724/articles/20230603-wgnqrgmj8kymzpev)
